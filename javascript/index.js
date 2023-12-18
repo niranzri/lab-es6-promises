@@ -77,7 +77,7 @@ obtainInstruction('steak', 0)
   })
   .then((step7) => {
     document.querySelector("#steak").innerHTML += `<li>${step7}</li>`;
-    return obtainInstruction('steak', 8)
+    //return obtainInstruction('steak', 8)
   })
   .catch((error) => console.log(error))
   .finally(() => document.querySelector("#steak").innerHTML += `<li> Steak is ready! </li>`);
@@ -109,7 +109,7 @@ async function makeBroccoli() {
 makeBroccoli()
 
 // iteration 3 modification
-async function makeBrusselsSprouts() {
+/*async function makeBrusselsSprouts() {
   try {
     const steps = 8;
     const instructionsElement = document.querySelector("#brusselsSprouts");
@@ -126,7 +126,19 @@ async function makeBrusselsSprouts() {
   }
 }
 
-makeBrusselsSprouts()
+makeBrusselsSprouts() */
 
 // Bonus 2 - Promise all
-// ...
+const brusselSproutsPromises = brusselsSprouts.map((_, currentIndex) => 
+  obtainInstruction('brusselsSprouts', currentIndex));
+
+Promise.all(brusselSproutsPromises).then((alltheSteps) => {
+  alltheSteps.forEach(currentStep => {
+    document.querySelector("#brusselsSprouts").innerHTML += `<li>${currentStep}</li>`;
+  })
+  document.querySelector("#brusselsSprouts").removeAttribute("hidden");
+
+}).catch(error => {
+  console.log(error);
+});
+
